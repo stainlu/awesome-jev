@@ -62,8 +62,15 @@ def slug(heading: str) -> str:
 
 
 def cell(text: str, limit: int = 110) -> str:
-    """Table-safe one-liner."""
-    text = " ".join(text.split()).replace("|", "\\|")
+    """Table-safe one-liner.
+
+    These strings come from other people's repo descriptions, so they carry
+    characters Markdown reads as syntax: a pipe ends the cell, and a bracket
+    starts a link reference that has no definition.
+    """
+    text = " ".join(text.split())
+    for ch in "|[]":
+        text = text.replace(ch, "\\" + ch)
     return text[: limit - 1] + "…" if len(text) > limit else text
 
 
@@ -73,11 +80,13 @@ def main() -> None:
     index = json.loads(INDEX.read_text())
     sections = parse_featured(FEATURED.read_text()) if FEATURED.exists() else []
 
+    featured_names = {n for _, entries in sections for n, _ in entries}
     live = [r for r in index.values() if not r.get("missing_since")]
     # A repo whose only commit is the day it was created was published and
     # abandoned. It stays in the index; it does not take up a row in the README.
+    # Featured entries are not repeated in the table below.
     active = sorted(
-        (r for r in live if r["alive"]),
+        (r for r in live if r["alive"] and r["full_name"] not in featured_names),
         key=lambda r: (-r["stars"], r["full_name"].lower()),
     )
 
@@ -93,11 +102,12 @@ def main() -> None:
             repo = index.get(name)
             if repo is None:
                 sys.exit(f"featured entry not in index: {name} — run discover.py, or fix the name")
-            body.append(f"- [{name}]({repo['url']}) — {note}")
+            body.append(f"- [{name}]({repo['url']}) - {note}")
         body.append("")
 
     body.append(f"## All projects\n")
-    body.append(f"**{len(active):,} active projects**, out of {len(live):,} indexed.\n")
+    body.append(
+        f"**{len(active):,} more active projects**, out of {len(live):,} indexed.\n")
     body.append(LEGEND.format(total=len(live), dormant=len(live) - len(active)))
     body.append("| Project | What it is | ★ | Language | Last commit |")
     body.append("| --- | --- | ---: | --- | --- |")

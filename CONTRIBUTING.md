@@ -3,11 +3,19 @@
 ## Adding a project
 
 You usually do not need to. `scripts/discover.py` runs daily and picks up any public repo that
-carries a Jev signal — the topics `jev`, `typesafe-ai`, `system-one`, or a description naming Jev
-or typesafe.ai. If yours is missing, the fastest fix is to add one of those topics to your repo.
+carries a Jev signal:
 
-If it still does not appear after a day, open an issue and say which signal should have caught it.
-That is a bug in the sweep, not a missing entry.
+- a topic — `jev`, `typesafe-ai`, `system-one`, `system-one-models`
+- a description naming Jev, typesafe.ai, or "System One model"
+- **code** containing `api.typesafe.ai/v1/systemone`, `@typesafe-ai/sdk`, or `TYPESAFE_API_KEY`
+
+The code signals matter most: they are how an established project that added Jev support gets
+found without renaming itself. If your project is missing, the fastest fix is to add one of the
+topics. If it still does not appear after a day, open an issue and say which signal should have
+caught it — that is a bug in the sweep, not a missing entry.
+
+The README table lists projects that were committed to after the day they were published. The
+complete index, dormant projects included, is `data/projects.json`.
 
 ## Adding a Featured entry
 

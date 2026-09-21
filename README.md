@@ -23,24 +23,24 @@ Not affiliated with TypeSafe AI.
 
 ## Frameworks that already speak Jev
 
-- [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai) — Each field of your `output_type` becomes one Jev question, so a decision agent runs on Jev exactly like on an LLM, and switching back is a one-word model change. The cleanest way to A/B a typed decision against a language model.
-- [BerriAI/litellm](https://github.com/BerriAI/litellm) — A guardrail that asks Jev one yes/no question per finished tool exchange — "is this result still needed?" — and blanks the ones it says no to. Context compaction with no summariser in the loop.
-- [BoundaryML/baml](https://github.com/BoundaryML/baml) — Jev as a first-class client in BAML's standard library: bools and floats become Noul, enums and unions become Choice, and classes flatten to one question per leaf. The best worked example of mapping a type system onto Jev's three primitives.
+- [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai) - Each field of your `output_type` becomes one Jev question, so a decision agent runs on Jev exactly like on an LLM, and switching back is a one-word model change. The cleanest way to A/B a typed decision against a language model.
+- [BerriAI/litellm](https://github.com/BerriAI/litellm) - A guardrail that asks Jev one yes/no question per finished tool exchange — "is this result still needed?" — and blanks the ones it says no to. Context compaction with no summariser in the loop.
+- [BoundaryML/baml](https://github.com/BoundaryML/baml) - Jev as a first-class client in BAML's standard library: bools and floats become Noul, enums and unions become Choice, and classes flatten to one question per leaf. The best worked example of mapping a type system onto Jev's three primitives.
 
 ## Browser and computer use
 
-- [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast) — Jev picks the operation and the element; a small LLM writes text only when the action is `TYPE_TEXT`. The clearest demonstration of the split Jev exists for: decide with Jev, generate with an LLM.
+- [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast) - Jev picks the operation and the element; a small LLM writes text only when the action is `TYPE_TEXT`. The clearest demonstration of the split Jev exists for: decide with Jev, generate with an LLM.
 
 ## Coding agents
 
-- [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) — Replaces Claude Code's compaction summary with Jev decisions about which tool calls and results are still needed. A real answer to context-window pressure rather than a demo.
+- [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) - Replaces Claude Code's compaction summary with Jev decisions about which tool calls and results are still needed. A real answer to context-window pressure rather than a demo.
 
 ## All projects
 
-**2,175 active projects**, out of 5,684 indexed.
+**2,170 more active projects**, out of 5,684 indexed.
 
 Swept daily, and listed here if anyone committed to it after the day it was published.
-That one filter separates a project from a launch-week drop, and it removes 3,509 of the
+That one filter separates a project from a launch-week drop, and it removes 3,514 of the
 5,684 repos in the index.
 
 The complete index — all 5,684, dormant ones included, with the search signals that found each
@@ -54,7 +54,6 @@ The complete index — all 5,684, dormant ones included, with the search signals
 | [langchain-ai/langchain](https://github.com/langchain-ai/langchain) | The agent engineering platform. | 146,795 | Python | 2026-09-21 |
 | [koala73/worldmonitor](https://github.com/koala73/worldmonitor) | Real-time global intelligence dashboard. AI-powered news aggregation, geopolitical monitoring, and infrastruc… | 87,146 | TypeScript | 2026-09-21 |
 | [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) | An AI Hedge Fund Team | 63,650 | Python | 2026-09-18 |
-| [BerriAI/litellm](https://github.com/BerriAI/litellm) | The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format wi… | 59,320 | Python | 2026-09-21 |
 | [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | AAS Core is the local, agent-first control plane for complete catalog discovery, agent-owned selection, stack… | 46,701 | Python | 2026-09-21 |
 | [Wei-Shaw/sub2api](https://github.com/Wei-Shaw/sub2api) | Sub2API 一站式开源中转服务，让 Claude、Openai 、Gemini、Grok订阅统一接入，支持拼车共享，更高效分摊成本，原生工具无缝使用。 | 42,271 | Go | 2026-09-21 |
 | [CopilotKit/CopilotKit](https://github.com/CopilotKit/CopilotKit) | The Frontend Stack for Agents & Generative UI. React, Angular, Mobile, Slack, and more. Makers of the AG-UI P… | 37,450 | TypeScript | 2026-09-21 |
@@ -64,18 +63,15 @@ The complete index — all 5,684, dormant ones included, with the search signals
 | [trycua/cua](https://github.com/trycua/cua) | Scale computer-use 2.0 with open-source drivers, cross-OS fleets, and benchmarks for training, evaluation, an… | 25,559 | HTML | 2026-09-21 |
 | [vectorize-io/hindsight](https://github.com/vectorize-io/hindsight) | Hindsight: Agent Memory That Learns | 24,196 | Python | 2026-09-21 |
 | [comet-ml/opik](https://github.com/comet-ml/opik) | Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tra… | 22,182 | Python | 2026-09-21 |
-| [pydantic/pydantic-ai](https://github.com/pydantic/pydantic-ai) | How Python does AI. Agents, realtime voice, image generation, embeddings. Every model, every interface, typed… | 20,092 | Python | 2026-09-21 |
 | [1jehuang/jcode](https://github.com/1jehuang/jcode) | The most RAM efficient harness | 19,971 | Rust | 2026-09-21 |
 | [elizaOS/eliza](https://github.com/elizaOS/eliza) | Open source agentic operating system | 19,406 | TypeScript | 2026-09-21 |
 | [langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs) | The agent engineering platform | 18,215 | TypeScript | 2026-09-21 |
 | [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) | AI 时代的伯克希尔：基于 Claude Code / Codex 的价值投资研究框架。巴菲特·芒格·段永平·李录四大师方法论 + 多Agent并行研究。\| AI-era Berkshire: a value inv… | 16,478 | HTML | 2026-09-20 |
 | [Effect-TS/effect](https://github.com/Effect-TS/effect) | Build production-ready applications in TypeScript | 16,158 | TypeScript | 2026-09-21 |
-| [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast) | Fastest and cheapest web agent | 14,798 | Python | 2026-09-18 |
 | [tonhowtf/omniget](https://github.com/tonhowtf/omniget) | Udemy & Hotmart course downloader, YouTube downloader (yt-dlp GUI, 1,800+ sites) + desktop app for AI agents:… | 14,099 | Rust | 2026-09-21 |
 | [elie222/inbox-zero](https://github.com/elie222/inbox-zero) | The world's best AI personal assistant for email. Open source app to help you reach inbox zero fast. | 12,272 | TypeScript | 2026-09-20 |
 | [OpenByteInc/QuantDinger](https://github.com/OpenByteInc/QuantDinger) | Open-source AI Trading OS, agent trading, and vibe trading, with Jev System One integration. Research, build … | 11,907 | Python | 2026-09-21 |
 | [Arize-ai/phoenix](https://github.com/Arize-ai/phoenix) | AI Observability & Evaluation | 11,563 | Python | 2026-09-21 |
-| [BoundaryML/baml](https://github.com/BoundaryML/baml) | The programming language for agents | 9,238 | Rust | 2026-09-21 |
 | [0xPlaygrounds/rig](https://github.com/0xPlaygrounds/rig) | ⚙️🦀 Build modular and scalable LLM Applications in Rust | 8,691 | Rust | 2026-09-21 |
 | [kunchenguid/no-mistakes](https://github.com/kunchenguid/no-mistakes) | git push no-mistakes | 8,591 | Go | 2026-09-21 |
 | [tbphp/gpt-load](https://github.com/tbphp/gpt-load) | Self-hosted AI gateway for multi-channel, multi-credential setups — API keys and subscription accounts, sched… | 6,927 | Go | 2026-09-21 |
@@ -85,7 +81,6 @@ The complete index — all 5,684, dormant ones included, with the search signals
 | [lightdash/lightdash](https://github.com/lightdash/lightdash) | Agentic BI. Analytics at the speed of code ⚡️ | 6,147 | TypeScript | 2026-09-21 |
 | [samchon/typia](https://github.com/samchon/typia) | Super-fast/easy runtime validators and serializers via transformation | 5,911 | TypeScript | 2026-09-21 |
 | [oomol-lab/open-connector](https://github.com/oomol-lab/open-connector) | Open-source auth gateway connecting 1500+ SaaS providers to AI agents through SDK, CLI, MCP, HTTP, and OpenAP… | 5,856 | TypeScript | 2026-09-21 |
-| [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | Claude Code plugin that replaces the compaction summary with Jev decisions: every tool call and result is sco… | 5,844 | TypeScript | 2026-09-18 |
 | [BuilderIO/agent-native](https://github.com/BuilderIO/agent-native) | A framework for building agentic apps | 5,695 | TypeScript | 2026-09-21 |
 | [experientiallabs/experiential](https://github.com/experientiallabs/experiential) | Experiential is the open source, zero markup gateway for BYOK, self-hosted and 1000+ marketplace models. It l… | 5,379 | Python | 2026-09-21 |
 | [agentgateway/agentgateway](https://github.com/agentgateway/agentgateway) | Next Generation Agentic Proxy for AI Agents and MCP servers | 4,961 | Rust | 2026-09-21 |
@@ -1352,7 +1347,7 @@ The complete index — all 5,684, dormant ones included, with the search signals
 | [coderexpert123/jev-browser-wingman](https://github.com/coderexpert123/jev-browser-wingman) | Browser automation where TypeSafe's Jev model picks each step. Attaches to an existing Chrome via CDP and run… | 0 | TypeScript | 2026-09-21 |
 | [coding-hermes/auger](https://github.com/coding-hermes/auger) | Auger — spec drilling for the coding-hermes fleet: a CLI that interrogates a project into a git-backed spec o… | 0 | Python | 2026-09-21 |
 | [cog-pr/jev-hackathon](https://github.com/cog-pr/jev-hackathon) | — | 0 | HTML | 2026-09-20 |
-| [cognesy/instructor-polyglot](https://github.com/cognesy/instructor-polyglot) | [READ-ONLY] Access LLMs via unified API | 0 | PHP | 2026-09-17 |
+| [cognesy/instructor-polyglot](https://github.com/cognesy/instructor-polyglot) | \[READ-ONLY\] Access LLMs via unified API | 0 | PHP | 2026-09-17 |
 | [colazeta/criminal_infiltration_in_legal_economy_review](https://github.com/colazeta/criminal_infiltration_in_legal_economy_review) | This repository is meant to store a systematic review on the topic of criminal infiltration in the legal econ… | 0 | Python | 2026-09-21 |
 | [colinmcdermott/grok-jev-router](https://github.com/colinmcdermott/grok-jev-router) | Jev decides, Grok Bot executes, humans control irreversible actions. A decision router for Grok Bot built on … | 0 | Python | 2026-09-21 |
 | [copyleftdev/braess-router](https://github.com/copyleftdev/braess-router) | Bounded semantic routing with Jev and Poise. Rust, single-server, alpha. | 0 | Rust | 2026-09-21 |
