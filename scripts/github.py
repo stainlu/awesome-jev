@@ -34,6 +34,13 @@ class Client:
             "User-Agent": "awesome-jev-discovery",
         }
 
+    @staticmethod
+    def _is_rate_limited(err: urllib.error.HTTPError) -> bool:
+        return (
+            err.headers.get("Retry-After") is not None
+            or err.headers.get("X-RateLimit-Remaining") == "0"
+        )
+
     def get(self, path: str, **params) -> dict:
         url = f"{API}{path}"
         if params:
@@ -44,7 +51,16 @@ class Client:
                 with urllib.request.urlopen(req, timeout=30) as resp:
                     return json.load(resp)
             except urllib.error.HTTPError as err:
-                # Secondary rate limits answer 403/429 with a retry hint.
+                # 403 means two different things. A secondary rate limit is
+                # worth waiting out; a token without the right scope never
+                # succeeds, and retrying it just buries the real reason.
+                if err.code == 403 and not self._is_rate_limited(err):
+                    raise PermissionError(
+                        f"403 from {path}: {err.read().decode('utf-8', 'replace')[:300]}\n"
+                        "The code search endpoint needs a personal access token with "
+                        "`public_repo` scope. GitHub Actions' built-in GITHUB_TOKEN "
+                        "cannot use it — set GH_PAT instead."
+                    ) from err
                 if err.code in (403, 429):
                     wait = int(err.headers.get("Retry-After") or 2 ** (attempt + 3))
                     time.sleep(min(wait, 120))

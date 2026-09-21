@@ -17,9 +17,21 @@ jobs:
         with:
           python-version: "3.12"
 
+      # The built-in GITHUB_TOKEN cannot call the code search endpoint, and the
+      # code signals are what find established projects that added Jev support
+      # without renaming themselves. Without a PAT the sweep would quietly lose
+      # them, so stop here instead.
+      - name: Require a token that can search code
+        run: |
+          if [ -z "${{ secrets.GH_PAT }}" ]; then
+            echo "::error::GH_PAT is not set. Create a token with public_repo scope at" \
+                 "https://github.com/settings/tokens and add it as the GH_PAT repository secret."
+            exit 1
+          fi
+
       - name: Discover projects
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: python3 scripts/discover.py
 
       - name: Rebuild README
