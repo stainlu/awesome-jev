@@ -26,14 +26,19 @@ of N), **Score** (rate on an ordered scale), **Noul** (probability a statement i
 decision layer for software — routing, classification, moderation, guardrails, scoring — not a
 text generator.
 
-The ecosystem went from nothing to thousands of repos in a week, so this list does two jobs:
-**Featured** is hand-read and short. **All projects** is the complete index, swept daily.
+The ecosystem went from nothing to thousands of repos in a week, so this list does two jobs.
+**Featured** is short and hand-read: every entry was opened and its use of Jev confirmed in the
+source, not guessed from its description. **All projects** is the full sweep, run daily.
 
 Not affiliated with TypeSafe AI.
 """
 
-LEGEND = """Swept daily. `Last commit` is the honest activity signal: a project whose only commit
-is the day it was created has not been touched since it was published.
+LEGEND = """Swept daily, and listed here if anyone committed to it after the day it was published.
+That one filter separates a project from a launch-week drop, and it removes {dormant:,} of the
+{total:,} repos in the index.
+
+The complete index — all {total:,}, dormant ones included, with the search signals that found each
+— is [`data/projects.json`](data/projects.json). It is generated, so grep it rather than read it.
 """
 
 
@@ -69,7 +74,12 @@ def main() -> None:
     sections = parse_featured(FEATURED.read_text()) if FEATURED.exists() else []
 
     live = [r for r in index.values() if not r.get("missing_since")]
-    live.sort(key=lambda r: (-r["stars"], r["full_name"].lower()))
+    # A repo whose only commit is the day it was created was published and
+    # abandoned. It stays in the index; it does not take up a row in the README.
+    active = sorted(
+        (r for r in live if r["alive"]),
+        key=lambda r: (-r["stars"], r["full_name"].lower()),
+    )
 
     contents = ["## Contents", ""]
     for heading, _ in sections:
@@ -87,16 +97,15 @@ def main() -> None:
         body.append("")
 
     body.append(f"## All projects\n")
-    body.append(f"{len(live)} projects.\n")
-    body.append(LEGEND)
+    body.append(f"**{len(active):,} active projects**, out of {len(live):,} indexed.\n")
+    body.append(LEGEND.format(total=len(live), dormant=len(live) - len(active)))
     body.append("| Project | What it is | ★ | Language | Last commit |")
     body.append("| --- | --- | ---: | --- | --- |")
-    for r in live:
+    for r in active:
         desc = cell(r["description"]) or "—"
-        never = "" if r["alive"] else " ⚠"
         body.append(
-            f"| [{r['full_name']}]({r['url']}) | {desc} | {r['stars']} | "
-            f"{r['language'] or '—'} | {r['pushed']}{never} |"
+            f"| [{r['full_name']}]({r['url']}) | {desc} | {r['stars']:,} | "
+            f"{r['language'] or '—'} | {r['pushed']} |"
         )
 
     footer = """
