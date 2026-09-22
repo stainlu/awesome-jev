@@ -35,6 +35,9 @@ EXCLUDED = ROOT / "data" / "excluded.md"
 # (Go generics libraries, TanStack Router, http4k) and was 437 entries of pure
 # noise when measured.
 STRONG_SIGNALS = [
+    # The vendor's own repositories. Their descriptions say "the TypeSafe API",
+    # not "Jev", and the SDKs predate the launch, so nothing else finds them.
+    "user:typesafe-ai",
     "topic:jev",
     "topic:typesafe-ai",
     "topic:system-one",
@@ -130,6 +133,7 @@ def record(repo: dict, signals: list[str], first_seen: str) -> dict:
         # The one signal that separates a real project from a launch-week drop.
         "alive": pushed > created,
         "archived": repo.get("archived", False),
+        "fork": repo.get("fork", False),
         "signals": sorted(signals),
         "first_seen": first_seen,
     }
@@ -143,6 +147,9 @@ def keep(entry: dict, exclusions: set[str]) -> bool:
     """
     return (
         entry["full_name"].lower() not in exclusions
+        # A fork is someone else's project with a copy button pressed. The
+        # original is already indexed; the copy is noise.
+        and not entry.get("fork")
         and accept(entry["created"], entry["signals"])
     )
 
