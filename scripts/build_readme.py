@@ -15,6 +15,16 @@ INDEX = ROOT / "data" / "projects.json"
 FEATURED = ROOT / "data" / "featured.md"
 README = ROOT / "README.md"
 
+# GitHub stops rendering a README at 512 KB and shows a truncation notice
+# instead. It does not fail, it does not warn, and the table simply disappears —
+# so this script refuses to write a file that would cross the line.
+RENDER_LIMIT = 512 * 1024
+BUDGET = 480 * 1024  # leave room for one sweep's growth between runs
+
+# Raise this to shrink the table when the guard below fires. Every project stays
+# in data/projects.json either way; this only controls how many earn a row.
+MIN_STARS = 0
+
 HEADER = """# Awesome Jev [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 > Every public project built on [Jev](https://typesafe.ai), TypeSafe AI's System One model \
@@ -86,7 +96,8 @@ def main() -> None:
     # abandoned. It stays in the index; it does not take up a row in the README.
     # Featured entries are not repeated in the table below.
     active = sorted(
-        (r for r in live if r["alive"] and r["full_name"] not in featured_names),
+        (r for r in live if r["alive"] and r["full_name"] not in featured_names
+         and r["stars"] >= MIN_STARS),
         key=lambda r: (-r["stars"], r["full_name"].lower()),
     )
 
@@ -126,10 +137,22 @@ hand — but a Featured entry is a human judgment and always welcome. See
 [CONTRIBUTING.md](CONTRIBUTING.md).
 """
 
-    README.write_text(
-        HEADER + "\n" + "\n".join(contents) + "\n\n" + "\n".join(body) + footer
-    )
-    print(f"{len(live)} projects, {sum(len(e) for _, e in sections)} featured -> {README}")
+    text = HEADER + "\n" + "\n".join(contents) + "\n\n" + "\n".join(body) + footer
+    size = len(text.encode())
+    if size > BUDGET:
+        counts = {
+            n: sum(1 for r in live if r["alive"] and r["stars"] >= n) for n in (1, 3, 5)
+        }
+        sys.exit(
+            f"README would be {size / 1024:.0f} KB. GitHub stops rendering at "
+            f"{RENDER_LIMIT // 1024} KB, so this would silently drop the table.\n"
+            f"Raise MIN_STARS in {__file__}:\n"
+            + "\n".join(f"  MIN_STARS = {n}  ->  {c:,} rows" for n, c in counts.items())
+        )
+
+    README.write_text(text)
+    print(f"{len(live)} projects, {len(active)} rows, "
+          f"{sum(len(e) for _, e in sections)} featured, {size / 1024:.0f} KB -> {README}")
 
 
 if __name__ == "__main__":

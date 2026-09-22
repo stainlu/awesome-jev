@@ -67,6 +67,12 @@ SIGNALS = STRONG_SIGNALS + WEAK_SIGNALS
 # older repo that genuinely adopted Jev says so with a topic — a strong signal.
 EPOCH = dt.date(2026, 9, 15)
 
+# A repo can fall out of a sweep without going anywhere: the search API caps
+# each query at 1000 results, so on a busy creation-day a project that ranked
+# inside the cap one run can rank outside it the next. Only call it gone once it
+# has missed several runs in a row.
+ABSENT_RUNS_BEFORE_MISSING = 3
+
 
 def accept(created: str, signals: list[str]) -> bool:
     """Whether a search hit is evidence of a Jev project."""
@@ -199,7 +205,11 @@ def main() -> None:
             dropped += 1
             continue
         if not rebuild:
-            old["missing_since"] = old.get("missing_since", today.isoformat())
+            old["absent_runs"] = old.get("absent_runs", 0) + 1
+            if old["absent_runs"] >= ABSENT_RUNS_BEFORE_MISSING:
+                old["missing_since"] = old.get("missing_since", today.isoformat())
+            else:
+                old.pop("missing_since", None)
         index[name] = old
 
     INDEX.parent.mkdir(exist_ok=True)
